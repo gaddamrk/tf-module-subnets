@@ -9,7 +9,7 @@ resource "aws_subnet" "main" {
 
 }
 
-resource "aws_route_table" "example" {
+resource "aws_route_table" "route_table" {
   vpc_id = var.vpc_id
 
   route {
@@ -22,7 +22,12 @@ resource "aws_route_table" "example" {
     { Name = "${var.env}-${var.name}-route_table" }
   )
 
+}
 
+resource "aws_route_table_association" "association" {
+  count = length(aws_subnet.main)
+  subnet_id      = aws_subnet.main.*.id[count.index]
+  route_table_id = aws_route_table.route_table.id
 }
 
 
