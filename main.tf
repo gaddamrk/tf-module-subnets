@@ -38,4 +38,3 @@ resource "aws_route" "internet_gw_route" {
 }
 
 
-
